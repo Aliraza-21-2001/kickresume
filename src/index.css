@@ -1,0 +1,50 @@
+:root {
+  font-family: 'Courier New', Courier, monospace;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.my-bg-white{
+  background-color: #FAFAFA;
+
+}
+
+.my-bg-blue{
+  /* background-color: #2596be; */
+  background-color: #054677;
+}
+.my-text-blue{
+ color: #054677;
+
+}
+.my-text-white{
+  color: #FAFAFA;
+ 
+ }
+
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
+ .myFont {
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+ }

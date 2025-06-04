@@ -1,0 +1,10 @@
+* {
+  margin: 0;
+  padding: 0;
+
+}
+
+ .myFont {
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+ }
