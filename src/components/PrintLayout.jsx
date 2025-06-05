@@ -50,7 +50,7 @@ const PrintLayout = forwardRef(function PrintLayout(props, ref) {
       <Box sx={{ marginLeft: '150.6px', marginTop: "215.15px", position: "absolute" }}>
         <Typography sx={{ ...commonStyles, fontSize: "22px", fontWeight: "bold" }}>{formData.vehicleCode.toUpperCase()}   {formData.vehicleNumber}</Typography>
       </Box>
-      <Box sx={{ marginLeft: '455.63px', marginTop: " 280.54px", position: "absolute" }}>
+      <Box sx={{ marginLeft: '445.63px', marginTop: " 280.54px", position: "absolute" }}>
         <Typography sx={commonStyles}>AVG PER BAG :-&nbsp;&nbsp;&nbsp;0.00</Typography>
       </Box>
       <Box sx={{ marginLeft: '116.75px', marginTop: "270.23px", position: "absolute", padding: "22px" }}>
@@ -64,15 +64,15 @@ const PrintLayout = forwardRef(function PrintLayout(props, ref) {
           <Typography sx={{...commonStyles , marginTop: "0",marginBottom: "0",padding: "0", fontSize:"18px" }}>{formData.driverStatus.toUpperCase()}</Typography>
         
       </Box>
-      <Box sx={{ marginLeft: '520.75px', marginTop: "320.22px", position: "absolute" }}>
-        <Typography sx={{ ...commonStyles, fontSize: "22px", fontWeight: "bold" }}>250    /=</Typography>
+      <Box sx={{ marginLeft: '590.75px', marginTop: "320.22px", position: "absolute" }}>
+        <Typography sx={{ ...commonStyles, fontSize: "22px", fontWeight: "bold" }}>250   &nbsp; /=</Typography>
       </Box>
-      <Box sx={{ marginLeft: "300.18px", marginTop: "199.33px", position: "absolute", padding: "0"}}>
+      <Box sx={{ marginLeft: "300.18px", marginTop: "210.33px", position: "absolute", padding: "0"}}>
     
-          <Typography sx={{...commonStyles , letterSpacing:"-1px", fontSize:"18px"}}>{formatDateTimeToDDMMYYYY_HHMM  (formData.timeIn)}</Typography>
+          <Typography sx={{...commonStyles , letterSpacing:"-1px", fontSize:"18px" ,marginBottom:"-10px"}}>{formatDateTimeToDDMMYYYY_HHMM  (formData.timeIn)}</Typography>
         
    
-          <Typography sx={{...commonStyles , letterSpacing:"-1px", fontSize:"18px"}}>{formatDateTimeToDDMMYYYY_HHMM  (formData.timeOut)}</Typography>
+          <Typography sx={{...commonStyles , letterSpacing:"-1px", fontSize:"18px" ,marginBottom:"-10px"  }}>{formatDateTimeToDDMMYYYY_HHMM  (formData.timeOut)}</Typography>
       
       </Box>
       <Box sx={{ left: "510.45px", top: "185.9px", textAlign: "right", position: "absolute" }}>
