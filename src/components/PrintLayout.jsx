@@ -47,7 +47,7 @@ const PrintLayout = forwardRef(function PrintLayout(props, ref) {
         },
       }}
     >
-      <Box sx={{ marginLeft: '150.6px', marginTop: "215.15px", position: "absolute" }}>
+      <Box sx={{ marginLeft: '140.6px', marginTop: "215.15px", position: "absolute" }}>
         <Typography sx={{ ...commonStyles, fontSize: "22px", fontWeight: "bold" }}>{formData.vehicleCode.toUpperCase()}   {formData.vehicleNumber}</Typography>
       </Box>
       <Box sx={{ marginLeft: '445.63px', marginTop: " 280.54px", position: "absolute" }}>
@@ -55,13 +55,13 @@ const PrintLayout = forwardRef(function PrintLayout(props, ref) {
       </Box>
       <Box sx={{ marginLeft: '116.75px', marginTop: "270.23px", position: "absolute", padding: "22px" }}>
        
-          <Typography sx={{...commonStyles , marginTop: "0",marginBottom: "-6px",padding: "0",fontSize:"18px" }}> M@(40)=&nbsp;&nbsp;&nbsp;<span style={{fontSize:"20px"}}>{Math.floor(formData.netWeight / 40)}M and {formData.netWeight % 40} kg</span></Typography>
+              <Typography sx={{...commonStyles , marginTop: "0",marginBottom: "-6px",padding: "0",fontSize:"16px" }}> M@(40)=&nbsp;&nbsp;&nbsp;<span style={{fontSize:"22px"}}>{Math.floor(formData.netWeight / 40)}</span>&nbsp;M&nbsp;and&nbsp;<span style={{fontSize:"22px"}}>{formData.netWeight % 40}</span>&nbsp;kg</Typography>
      
         
-          <Typography sx={{...commonStyles , marginTop: "0",marginBottom: "-6px",padding: "0", fontSize:"18px" }}>BAG =</Typography>
+          <Typography sx={{...commonStyles , marginTop: "0",marginBottom: "-6px",padding: "0", fontSize:"16px" }}>BAG =</Typography>
      
         
-          <Typography sx={{...commonStyles , marginTop: "0",marginBottom: "0",padding: "0", fontSize:"18px" }}>{formData.driverStatus.toUpperCase()}</Typography>
+          <Typography sx={{...commonStyles , marginTop: "0",marginBottom: "0",padding: "0", fontSize:"16px" }}>{formData.driverStatus.toUpperCase()}</Typography>
         
       </Box>
       <Box sx={{ marginLeft: '590.75px', marginTop: "320.22px", position: "absolute" }}>
