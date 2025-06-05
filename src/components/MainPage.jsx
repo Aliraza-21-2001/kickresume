@@ -4,9 +4,10 @@ import Inputs from './Inputs.jsx'
 import FontSelector from './FontSelector.jsx'
 import PrintLayout from './PrintLayout'
 import MyContext from './ContexExp'
+import PreviewButton from './PreviewButton'
 
 const MainPage = () => {
-  const { fontFamily } = useContext(MyContext)
+  const { fontFamily,formData ,setFormData} = useContext(MyContext)
 
   return (
     <Box
@@ -174,6 +175,7 @@ const MainPage = () => {
               >
                 Easy to Print...
               </Typography>
+            
             </Box>
 
             <Box
