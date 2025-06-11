@@ -1,65 +1,116 @@
-import React, { useState, useContext, useRef} from 'react'
+import React, { useState, useContext, useRef, useCallback, useMemo } from 'react'
 import { Box, Typography, TextField, Checkbox, FormControlLabel } from '@mui/material'
+import MyContext from './ContexExp'
 import ButtonPrint from './ButtonPrint'
 import PrintLayout from './PrintLayout'
-import MyContext from './ContexExp'
 import { useReactToPrint } from 'react-to-print'
+import { DateTimeField } from '@mui/x-date-pickers/DateTimeField';
+import dayjs from 'dayjs';
 
 const Inputs = () => {
- 
-  const{formData,setFormData}=useContext(MyContext)
-  
-
+  const { setDataOne } = useContext(MyContext);
+  const [formData, setFormData] = useState({
+      vehicleCode: '',
+      vehicleNumber: '',
+      timeIn: null,
+      timeOut: null,
+      weight1: '',
+      weight2: '',
+      netWeight: '',
+      bags: '',
+      charges: '250',
+      driverStatus: 'Without Driver',
+    });
   const [driverStatus, setDriverStatus] = useState({
     withDriver: false,
     withoutDriver: true  // Set to true by default
   });
 
+  // Memoized handlers
+  const handleDateTimeChange = useCallback((field) => (newValue) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      [field]: newValue ? dayjs(newValue) : null
+    }));
+  }, []);
 
-  
-
-
-  // Handle weight input changes
-  const handleChange = (field) => (event) => {
+  const handleChange = useCallback((field) => (event) => {
     const { value, type, checked } = event.target;
     setFormData(prevData => ({
       ...prevData,
       [field]: type === "checkbox" ? checked : value
     }));
-  };
+  }, []);
 
-  // Handle checkbox changes
-  const handleCheckboxChange = (field) => (event) => {
+  const handleCheckboxChange = useCallback((field) => (event) => {
     const newDriverStatus = {
       withDriver: field === 'withDriver' ? event.target.checked : false,
       withoutDriver: field === 'withoutDriver' ? event.target.checked : false
     };
     setDriverStatus(newDriverStatus);
-    
-    // Update formData with the new driver status
     setFormData(prevData => ({
       ...prevData,
       driverStatus: newDriverStatus.withDriver ? 'With Driver' : 'Without Driver'
     }));
-  };
- const componentRef = useRef(null)
+  }, []);
+
+  // Only update context onBlur or on print
+  const handleBlur = useCallback(() => {
+    setDataOne(formData);
+  }, [formData, setDataOne]);
+
+  const componentRef = useRef(null)
 
   const handlePrint = useReactToPrint({
     contentRef: componentRef,
     documentTitle: "printlayout",
-    
+    onAfterPrint: () => {
+      setFormData({
+        vehicleCode: '',
+        vehicleNumber: '',
+        timeIn: null,
+        timeOut: null,
+        weight1: '',
+        weight2: '',
+        netWeight: '',
+        bags: '',
+        charges: '250',
+        driverStatus: 'Without Driver',
+      });
+      setDriverStatus({
+        withDriver: false,
+        withoutDriver: true
+      });
+      setDataOne({
+        vehicleCode: '',
+        vehicleNumber: '',
+        timeIn: null,
+        timeOut: null,
+        weight1: '',
+        weight2: '',
+        netWeight: '',
+        bags: '',
+        charges: '250',
+        driverStatus: 'Without Driver',
+      });
+    }
   });
 
-  const handlePreview = () => {
-    console.log('Previewing:', { formData, driverStatus });
-    
-  };
+  // Memoize derived values
+  const mAt40 = useMemo(() => {
+    const net = Number(formData.netWeight) || 0;
+    return {
+      m: Math.floor(net / 40),
+      kg: net % 40
+    };
+  }, [formData.netWeight]);
 
   return (
     <>
     <Box sx={{
       display: 'flex',
-      gap: '2rem',
+      lineHeight: '1.5',
+      gap: '1rem',
       alignItems: 'flex-start',
       flexDirection: 'column'
     }}>
@@ -93,6 +144,7 @@ const Inputs = () => {
             type='text' 
             value={formData.vehicleCode}
             onChange={handleChange('vehicleCode')}
+            onBlur={handleBlur}
             variant="outlined"
             size="small"
             placeholder="ABC"
@@ -134,6 +186,7 @@ const Inputs = () => {
             type='number' 
             value={formData.vehicleNumber}
             onChange={handleChange('vehicleNumber')}
+            onBlur={handleBlur}
             size="small"
             placeholder="123"
             sx={{
@@ -238,34 +291,21 @@ const Inputs = () => {
         >
           Enter Time Details
         </Typography>
-        
         <Box sx={{
           display: 'flex',
           gap: '1rem',
           alignItems: 'center',
           flexWrap: 'wrap'
         }}>
-          <TextField 
-            id="datetime-in"  
-            label="Time In" 
-            type="datetime-local"
-            variant="outlined"
-           
-            value={formData.timeIn}
-            onChange={handleChange('timeIn')}
-            size="small"
-            InputLabelProps={{
-              shrink: true,
-            }}
-            InputProps={{
-              inputProps: {
-                max: '9999-12-31T23:59',
-                step: "60"
-              }
-            }}
+          <DateTimeField
+            id="datetime-in"
+            label="Time In"
+            value={formData.timeIn || null}
+            onChange={handleDateTimeChange('timeIn')}
+            format="DD-MM-YYYY HH:mm"
             sx={{
               width: '220px',
-              '& .MuiOutlinedInput-root': {
+              '& .MuiPickersOutlinedInput-root': {
                 '& fieldset': {
                   borderColor: '#1e3c72',
                   borderWidth: '2px'
@@ -274,7 +314,7 @@ const Inputs = () => {
                   borderColor: '#2a5298'
                 },
                 '&.Mui-focused fieldset': {
-                  borderColor: '#1e3c72'
+                  borderColor: '#1e3c72 !important'
                 }
               },
               '& .MuiInputLabel-root': {
@@ -289,27 +329,18 @@ const Inputs = () => {
                 padding: '10px 14px'
               }
             }}
+            size="small"
+            InputLabelProps={{ shrink: true }}
           />
-          <TextField 
-            id="datetime-out"  
-            label="Time Out" 
-            type="datetime-local"
-            value={formData.timeOut}
-            onChange={handleChange('timeOut')}
-            variant="outlined"
-            size="small"
-            InputLabelProps={{
-              shrink: true,
-            }}
-            InputProps={{
-              inputProps: {
-                max: '9999-12-31T23:59',
-                step: "60"
-              }
-            }}
+          <DateTimeField
+            id="datetime-out"
+            label="Time Out"
+            value={formData.timeOut || null}
+            onChange={handleDateTimeChange('timeOut')}
+            format="DD-MM-YYYY HH:mm"
             sx={{
               width: '220px',
-              '& .MuiOutlinedInput-root': {
+              '& .MuiPickersOutlinedInput-root': {
                 '& fieldset': {
                   borderColor: '#1e3c72',
                   borderWidth: '2px'
@@ -318,7 +349,7 @@ const Inputs = () => {
                   borderColor: '#2a5298'
                 },
                 '&.Mui-focused fieldset': {
-                  borderColor: '#1e3c72'
+                  borderColor: '#1e3c72 !important'
                 }
               },
               '& .MuiInputLabel-root': {
@@ -333,6 +364,8 @@ const Inputs = () => {
                 padding: '10px 14px'
               }
             }}
+            size="small"
+            InputLabelProps={{ shrink: true }}
           />
         </Box>
       </Box>
@@ -371,6 +404,7 @@ const Inputs = () => {
             size="small"
             value={formData.weight1}
             onChange={handleChange('weight1')}
+            onBlur={handleBlur}
             type="text"
             placeholder="0.00"
             sx={{
@@ -417,6 +451,7 @@ const Inputs = () => {
             size="small"
             value={formData.weight2}
             onChange={handleChange('weight2')}
+            onBlur={handleBlur}
             type="text"
             placeholder="0.00"
             sx={{
@@ -463,6 +498,7 @@ const Inputs = () => {
             size="small"
             value={formData.netWeight}
             onChange={handleChange('netWeight')}
+            onBlur={handleBlur}
             type="text"
             placeholder="0.00"
             sx={{
@@ -482,9 +518,6 @@ const Inputs = () => {
               '& .MuiInputLabel-root': {
                 color: '#1e3c72',
                 fontSize: '0.9rem'
-              },
-              '& .MuiInputLabel-root.Mui-focused': {
-                color: '#1e3c72'
               },
               '& input': {
                 fontSize: '1rem',
@@ -536,7 +569,7 @@ const Inputs = () => {
               fontSize: '1rem',
               fontWeight: 600
             }}>
-              M@(40) = {Math.floor(formData.netWeight / 40)}M and {formData.netWeight % 40} kg
+              M@(40) = {mAt40.m}M and {mAt40.kg} kg
             </Typography>
           </Box>
 
@@ -551,6 +584,7 @@ const Inputs = () => {
               size="small"
               value={formData.bags}
               onChange={handleChange('bags')}
+              onBlur={handleBlur}
               type="text"
               placeholder="0"
               sx={{
@@ -587,6 +621,7 @@ const Inputs = () => {
               size="small"
               value={formData.charges}
                 onChange={handleChange('charges')}
+                onBlur={handleBlur}
               type="text"
               sx={{
                 width: '100px',
@@ -630,4 +665,4 @@ const Inputs = () => {
   )
 }   
 
-export default Inputs;
+export default React.memo(Inputs);

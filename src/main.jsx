@@ -9,11 +9,16 @@ import './index.css'
 import App from './App.jsx'
 import React from 'react';
 import MyProvider from "./components/Contexprovider.jsx";
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <MyProvider>
-      <App />
-    </MyProvider>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <MyProvider>
+        <App />
+      </MyProvider>
+    </LocalizationProvider>
   </StrictMode>,
 )

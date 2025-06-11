@@ -24,18 +24,9 @@ const FONT_OPTIONS = [
 ];
 
 const MyProvider = ({ children }) => {
-  const [formData, setFormData] = useState({
-    vehicleCode: '',
-    vehicleNumber: '',
-    timeIn: '',
-    timeOut: '',
-    weight1: '',
-    weight2: '',
-    netWeight: '',
-    bags: '',
-    charges: '250',
-    driverStatus: 'Without Driver',
-  });
+  const [dataOne, setDataOne]= useState({});
+   const [dataTwo, setDataTwo]= useState({});
+
   const [fontFamily, setFontFamily] = useState(FONT_OPTIONS.find(f => f.label === 'Courier New').value);
 
   const handleFontChange = (event) => {
@@ -43,7 +34,7 @@ const MyProvider = ({ children }) => {
   };
 
   return (
-    <MyContext.Provider value={{ formData, setFormData, fontFamily, setFontFamily, FONT_OPTIONS, handleFontChange }}>
+    <MyContext.Provider value={{ dataOne, setDataOne, dataTwo, setDataTwo , fontFamily, setFontFamily, FONT_OPTIONS, handleFontChange }}>
       {children}
     </MyContext.Provider>
   );
