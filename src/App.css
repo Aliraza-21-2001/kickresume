@@ -6,5 +6,15 @@
 
  .myFont {
   font-family: 'Courier New', Courier, monospace;
-  font-weight: bold;
+
  }
+ .print-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Columns divide karein */
+    grid-template-rows: auto; /* Rows adjust karein */
+    width: 210mm; /* Page size */
+    height: 297mm;
+    position: relative;
+    background-color: white;
+}
+ 

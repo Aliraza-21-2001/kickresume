@@ -88,30 +88,30 @@ function Inputs2() {
   const handlePrint2 = useReactToPrint({
     contentRef: componentRef,
     documentTitle: "printlayout2",
-    onAfterPrint: () => {
-      setFormDataTwo({
-        vehicleCode: '',
-        vehicleNumber: '',
-        timeIn: '',
-        netWeight: '',
-        bags: '',
-        charges: '0',
-        driverStatus: 'Without Driver',
-      });
-      setDriverStatus({
-        withDriver: false,
-        withoutDriver: true
-      });
-      setDataTwo({
-        vehicleCode: '',
-        vehicleNumber: '',
-        timeIn: '',
-        netWeight: '',
-        bags: '',
-        charges: '0',
-        driverStatus: 'Without Driver',
-      });
-    }
+    // onAfterPrint: () => {
+    //   setFormDataTwo({
+    //     vehicleCode: '',
+    //     vehicleNumber: '',
+    //     timeIn: '',
+    //     netWeight: '',
+    //     bags: '',
+    //     charges: '0',
+    //     driverStatus: 'Without Driver',
+    //   });
+    //   setDriverStatus({
+    //     withDriver: false,
+    //     withoutDriver: true
+    //   });
+    //   setDataTwo({
+    //     vehicleCode: '',
+    //     vehicleNumber: '',
+    //     timeIn: '',
+    //     netWeight: '',
+    //     bags: '',
+    //     charges: '0',
+    //     driverStatus: 'Without Driver',
+    //   });
+    // }
   });
 
   // Memoize derived values
